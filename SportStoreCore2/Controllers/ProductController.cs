@@ -1,23 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SportStoreCore2.Models;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using SportStoreCore2.Models.ViewModels;
 
 namespace SportStoreCore2.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IProductRepository _repository;
+        public int PageSize { get; set; } = 4;
 
         public ProductController(IProductRepository repository)
         {
             _repository = repository;
         }
 
-        public ViewResult List() => View(_repository.Products);
+        public ViewResult List(int page = 1) => View(
+            new ProductsListViewModel { 
+                Products = _repository
+                .Products.OrderBy(p => p.ProductId)
+                .Skip(PageSize * (page - 1))
+                .Take(PageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = _repository.Products.Count()
+                }
+            });
     }
 }
