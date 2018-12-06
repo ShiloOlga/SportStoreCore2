@@ -9,7 +9,7 @@ namespace SportStoreCore2.Models
 
         public IEnumerable<CartLine> Lines => _lineCollection;
 
-        public void AddItem(Product product, int quantity)
+        public virtual void AddItem(Product product, int quantity)
         {
             var line = _lineCollection.FirstOrDefault(p => p.Product.ProductId == product.ProductId);
             if (line == null)
@@ -22,7 +22,7 @@ namespace SportStoreCore2.Models
             }
         }
 
-        public void Remove(Product product)
+        public virtual void Remove(Product product)
         {
             _lineCollection.RemoveAll(p => p.Product.ProductId == product.ProductId);
         }
@@ -32,7 +32,7 @@ namespace SportStoreCore2.Models
             return _lineCollection.Sum(p => p.Product.Price * p.Quantity);
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
             _lineCollection.Clear();
         }
