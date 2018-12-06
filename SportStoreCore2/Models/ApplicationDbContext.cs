@@ -7,5 +7,6 @@ namespace SportStoreCore2.Models
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }
