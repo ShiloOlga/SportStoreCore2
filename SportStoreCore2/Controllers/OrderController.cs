@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SportStoreCore2.Models;
 
@@ -23,10 +20,10 @@ namespace SportStoreCore2.Controllers
         public ViewResult List() => View(_orderRepository.Orders.Where(o => !o.Shipped));
 
         [HttpPost]
-        public IActionResult MarkShipped(int orderID)
+        public IActionResult MarkShipped(int orderId)
         {
             Order order = _orderRepository.Orders
-                .FirstOrDefault(o => o.OrderID == orderID);
+                .FirstOrDefault(o => o.OrderId == orderId);
             if (order != null)
             {
                 order.Shipped = true;

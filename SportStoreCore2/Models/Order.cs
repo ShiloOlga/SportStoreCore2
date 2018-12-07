@@ -7,7 +7,7 @@ namespace SportStoreCore2.Models
     public class Order
     {
         [BindNever]
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
         [BindNever]
         public ICollection<CartLine> Lines { get; set; }
         [BindNever]

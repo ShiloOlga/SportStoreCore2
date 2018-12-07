@@ -16,7 +16,7 @@ namespace SportStoreCore2.Models
         public void SaveOrder(Order order)
         {
             _context.AttachRange(order.Lines.Select(l => l.Product));
-            if (order.OrderID == 0)
+            if (order.OrderId == 0)
             {
                 _context.Orders.Add(order);
             }
