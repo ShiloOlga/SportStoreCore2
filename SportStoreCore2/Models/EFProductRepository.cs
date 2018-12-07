@@ -12,5 +12,27 @@ namespace SportStoreCore2.Models
         }
 
         public IQueryable<Product> Products => _dbContext.Products;
+
+        public void Save(Product product)
+        {
+            if (product.ProductId == 0)
+            {
+                _dbContext.Products.Add(product);
+            }
+            else
+            {
+                var dbEntry = _dbContext.Products
+                    .FirstOrDefault(p => p.ProductId == product.ProductId);
+                if (dbEntry != null)
+                {
+                    dbEntry.Name = product.Name;
+                    dbEntry.Description = product.Description;
+                    dbEntry.Price = product.Price;
+                    dbEntry.Category = product.Category;
+                }
+            }
+
+            _dbContext.SaveChanges();
+        }
     }
 }
