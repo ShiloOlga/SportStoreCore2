@@ -22,7 +22,7 @@ namespace SportStoreCore2.Controllers
         [HttpPost]
         public IActionResult MarkShipped(int orderId)
         {
-            Order order = _orderRepository.Orders
+            var order = _orderRepository.Orders
                 .FirstOrDefault(o => o.OrderId == orderId);
             if (order != null)
             {

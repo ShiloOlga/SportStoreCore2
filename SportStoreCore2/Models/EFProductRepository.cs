@@ -34,5 +34,16 @@ namespace SportStoreCore2.Models
 
             _dbContext.SaveChanges();
         }
+
+        public Product DeleteProduct(int productId)
+        {
+            var dbEntry = _dbContext.Products.FirstOrDefault(p => p.ProductId == productId);
+            if (dbEntry != null)
+            {
+                _dbContext.Products.Remove(dbEntry);
+                _dbContext.SaveChanges();
+            }
+            return dbEntry;
+        }
     }
 }

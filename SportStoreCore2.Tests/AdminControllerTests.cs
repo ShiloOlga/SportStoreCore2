@@ -95,6 +95,24 @@ namespace SportStoreCore2.Tests
             Assert.IsType<ViewResult>(result);
         }
 
+        [Fact]
+        public void Can_Delete_Valid_Products()
+        {
+            const int productId = 2;
+            var mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] {
+                new Product {ProductId = 1, Name = "P1"},
+                new Product {ProductId = productId, Name = "P2"},
+                new Product {ProductId = 3, Name = "P3"},
+            }.AsQueryable());
+            var target = new AdminController(mock.Object);
+
+            target.Delete(productId);
+
+            // Assert
+            mock.Verify(m => m.DeleteProduct(productId));
+        }
+
         private T GetViewModel<T>(IActionResult result) where T : class
         {
             return (result as ViewResult)?.ViewData.Model as T;
