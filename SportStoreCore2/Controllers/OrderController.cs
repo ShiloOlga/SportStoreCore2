@@ -20,6 +20,21 @@ namespace SportStoreCore2.Controllers
             _cart = cart;
         }
 
+        public ViewResult List() => View(_orderRepository.Orders.Where(o => !o.Shipped));
+
+        [HttpPost]
+        public IActionResult MarkShipped(int orderID)
+        {
+            Order order = _orderRepository.Orders
+                .FirstOrDefault(o => o.OrderID == orderID);
+            if (order != null)
+            {
+                order.Shipped = true;
+                _orderRepository.SaveOrder(order);
+            }
+            return RedirectToAction(nameof(List));
+        }
+
         public ViewResult Checkout()
         {
             return View(new Order());
@@ -38,10 +53,7 @@ namespace SportStoreCore2.Controllers
                 _orderRepository.SaveOrder(order);
                 return RedirectToAction(nameof(Completed));
             }
-            else
-            {
-                return View(order);
-            }
+            return View(order);
         }
         public ViewResult Completed()
         {
